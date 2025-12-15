@@ -1,0 +1,22 @@
+FROM registry.redhat.io/rhel10/rhel-bootc:latest
+
+LABEL maintainer="Your Name <youremail@example.com>" \
+      description="Bootable .NET App on RHEL 10."
+
+# 1. Install the .NET 10 runtime from the RHEL repository
+# We don't need the full .NET SDK for a production environment just the runtime
+RUN dnf install -y dotnet-runtime-10.0 aspnetcore-runtime-10.0
+
+# 2. Add user "appuser" so that we're not running our .NET app as root
+RUN useradd -r -d /app -s /sbin/nologin appuser
+
+# 3. Copy our *published* application into the image
+COPY ./app/HelloRHEL/publish /app/
+
+# 4. Change ownership of the app files from root to our ‘appuser’.
+#    The 'appuser' needs to be able to read these files.
+RUN chown -R appuser:appuser /app
+
+# 5. Copy and enable our (newly modified) systemd service
+COPY hello-rhel.service /etc/systemd/system/hello-rhel.service
+RUN systemctl enable hello-rhel.service

@@ -1,0 +1,16 @@
+[Unit]
+Description=.NET 10 Hello World Web App
+# Ensure networking is up before we start
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Path to the .NET runtime and our application DLL
+ExecStart=/usr/bin/dotnet /app/HelloRHEL.dll
+WorkingDirectory=/app
+Restart=on-failure
+# We’ll create the user appuser and run our app as that user instead of root
+User=appuser
+
+[Install]
+WantedBy=multi-user.target
