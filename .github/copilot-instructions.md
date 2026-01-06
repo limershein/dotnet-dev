@@ -6,7 +6,7 @@ scripts, adhere to the following strict guidelines.
 * **Runtime:** Always use **Podman** instead of Docker. Do not assume a Docker daemon is running.
 * **File Naming:** Use `Containerfile` instead of `Dockerfile`.
 * **Base Images:** Default to Red Hat Universal Base Images (UBI) (e.g., `registry.access.redhat.com/ubi9/ubi` or `ubi9/python-39`). Avoid Alpine or Debian-based images.
-* **Bootable Containers:** When defining OS-level container images, use **bootc** patterns. Ensure the image is compatible with **Image Mode for RHEL**.
+* **Bootable Containers:** When defining OS-level container images, use **bootc** patterns. Use only images from Red Hat. Ensure the image is compatible with **Image Mode for RHEL**.
 * **Orchestration:** Generate Kubernetes manifests compatible with **Red Hat OpenShift** or **Podman Desktop**.
 
 ## 2. System Management
